@@ -1,95 +1,113 @@
-# Test Automation Champion
+# ✅ QA Automation Framework (Selenium + Pytest + HTML Reports + Docker)
 
-End-to-end test automation project using Selenium, Pytest, and the Page Object Model (POM). This repository simulates a complete user purchase flow on the [Sauce Demo](https://www.saucedemo.com) e-commerce platform.
-
----
-
-## ✅ Completed Features
-
-- 🔧 **Framework Setup**  
-  Configured with Pytest, Selenium, Page Object Model, and custom flows for reusable logic.
-
-- 🔐 **Login Automation**  
-  Automated login using data from a centralized configuration.
-
-- 🛒 **Product Selection**  
-  Ability to add multiple predefined products by ID.
-
-- 🧾 **Cart Validation**  
-  Verifies that all selected products appear in the shopping cart.
-
-- 📦 **Checkout Process (Step 1 & 2)**  
-  - Enters user information from config.  
-  - Verifies the summary page contains at least one of the expected products (data-driven with a tuple).
-
-- ✅ **Order Completion**  
-  Finalizes the order and confirms a successful purchase.
-
-- 📂 **Clean Folder Structure**  
-  - `pages/`: Page Object Models for each page  
-  - `tests/`: Pytest tests  
-  - `utils/`: Configs and reusable flows
+This is a complete QA automation framework built with **Python**, **Selenium WebDriver**, and **Pytest**, using the **Page Object Model (POM)** design pattern. It also includes **HTML reporting** and full **Docker integration** for isolated, reproducible test execution.
 
 ---
 
-## 📍 Technologies Used
+## 🚀 Features
 
-- Python 3
-- Pytest
-- Selenium WebDriver
-- POM (Page Object Model) pattern
-- Git + GitHub for version control
-
----
-
-## 🚧 Next Steps (In Progress)
-
-- 📊 **Integrate HTML Reports**  
-  Add reporting functionality to visualize test results and logs.
-
-- 🧪 **API Testing with `requests`**  
-  Validate product and user endpoints.
-
-- 🖼️ **Visual Testing with Playwright**  
-  Snapshot validation and UI consistency.
-
-- 🐳 **Docker Integration**  
-  Run tests in isolated containers for CI/CD.
-
-- ⚙️ **CI/CD via GitHub Actions**  
-  Auto-run tests on every push, PR or scheduled event.
+- 🔹 Page Object Model structure (modular and scalable)
+- 🔹 Selenium WebDriver for browser automation
+- 🔹 Pytest for test execution
+- 🔹 HTML reports with `pytest-html`
+- 🔹 Docker integration for running tests in containers
+- 🔹 Ready for CI/CD integration (GitHub Actions, etc.)
 
 ---
 
-## 📁 How to Run
+## 🧱 Project Structure
+
+```
+.
+├── pages/          # Page Object classes (POM)
+├── reports/        # Auto-generated HTML reports
+├── tests/          # Test cases using Pytest
+├── utils/          # Utility modules (waits, data, etc.)
+├── Dockerfile      # Docker configuration
+├── requirements.txt
+└── README.md       # Project overview and instructions
+```
+
+---
+
+## 🧪 How to Run Tests Locally
+
+### 1. Install dependencies
 
 ```bash
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
-
-# Install dependencies
 pip install -r requirements.txt
+```
 
-# Run tests
-pytest tests/
+### 2. Run tests with Pytest
+
+```bash
+pytest --html=reports/report.html --self-contained-html
+```
+
+The report will be saved in the `reports/` folder.
+
+---
+
+## 🐳 How to Run Tests with Docker
+
+### 1. Build the Docker image
+
+```bash
+docker build -t qa-automation-framework .
+```
+
+### 2. Run the tests in a container
+
+```bash
+docker run --rm -v ${PWD}/reports:/app/reports qa-automation-framework
+```
+
+✅ This will:
+- Mount your local `reports/` folder to the container
+- Execute all tests inside Docker
+- Output the `report.html` to your local `reports/` folder
+
+📌 On Windows PowerShell, use:
+
+```bash
+docker run --rm -v ${PWD}.Path\reports:/app/reports qa-automation-framework
 ```
 
 ---
 
-## 🙌 Author
+## 📊 Viewing the Test Report
 
-Elias Schepis  
-Automation QA Engineer  
-🇪🇸 Based in Europe | 🌍 Open to international collaboration
+After the test run, open:
+
+```
+reports/report.html
+```
+
+It contains a full summary of passed and failed tests, logs, and metadata.
 
 ---
 
-```python
-# test_buy.py
-def test_complete_workflow(driver):
-    # Full E2E test workflow implementation completed!
-    pass
-```
+## 📌 Technologies Used
 
-Stay tuned for API, visual testing and CI/CD integrations 🚀
+- Python 3.11
+- Selenium WebDriver
+- Pytest
+- Pytest-HTML
+- Docker
+
+---
+
+## ✅ Next Steps (Optional)
+
+- Add GitHub Actions for CI
+- Add API testing with `requests`
+- Add visual testing with `Playwright`
+- Add environment configuration management
+- Add test data generation utilities
+
+---
+
+## 📫 Contributions & Feedback
+
+Feel free to fork this repo or submit issues and improvements.  
+This project is intended for learning and as a production-ready foundation for your QA automation workflows.
