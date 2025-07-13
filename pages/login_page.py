@@ -1,5 +1,8 @@
 # Importamos los métodos de localización de elementos de Selenium
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
 
 # Esta clase representa la página de login del sitio
 # Usamos Page Object Model (POM) para separar la lógica de UI de los tests
@@ -15,16 +18,27 @@ class LoginPage:
         self.login_button = (By.ID, "login-button")           # Botón para enviar el formulario
         self.error_message = (By.XPATH, "//h3[@data-test='error']")  # Mensaje de error (si login falla)
 
-    # Método para abrir la página (URL del sitio)
+    # Metodo para abrir la página (URL del sitio)
     def load(self):
         self.driver.get("https://www.saucedemo.com")
 
-    # Método para ejecutar el login: completa los campos y hace clic
+    # Metodo para ejecutar el login: completa los campos y hace clic
     def login(self, username, password):
-        self.driver.find_element(*self.username_input).send_keys(username)
-        self.driver.find_element(*self.password_input).send_keys(password)
-        self.driver.find_element(*self.login_button).click()
+        # Espera a que el campo de username esté visible
+        time.sleep(2)
+        WebDriverWait(self.driver, 2).until(
+            EC.visibility_of_element_located(self.username_input)
+        ).send_keys(username)
 
-    # Método para obtener el texto del mensaje de error (si aparece)
+        WebDriverWait(self.driver, 2).until(
+            EC.visibility_of_element_located(self.password_input)
+        ).send_keys(password)
+
+        # Espera a que el botón esté presente y haga click
+        WebDriverWait(self.driver, 2).until(
+            EC.element_to_be_clickable(self.login_button)
+        ).click()
+
+    # Metodo para obtener el texto del mensaje de error (si aparece)
     def get_error_message(self):
         return self.driver.find_element(*self.error_message).text
