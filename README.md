@@ -1,101 +1,95 @@
-# Test-Automation-Champion-Pytest-Selenium
-End-to-end UI testing framework using Python, Selenium, and Pytest to automate a complete purchase flow on SauceDemo. Built with Page Object Model architecture for scalability and maintainability.
+# Test Automation Champion
 
-# 🧪 Test Automation Champion: End-to-End UI Testing with Selenium & Pytest
-
-This repository contains a fully functional end-to-end (E2E) automated UI test framework developed with **Python**, **Pytest**, and **Selenium WebDriver**, following best practices in **test automation architecture** and **Page Object Model (POM)** design.
-
-## 🚀 Project Overview
-
-This project simulates a complete purchase flow on [SauceDemo](https://www.saucedemo.com/), from login to order confirmation. The test is robust, reusable, and scalable, making it ideal as a portfolio project and a base for more complex automation pipelines.
-
-### 🔁 Workflow covered
-
-- ✅ User login
-- ✅ Add multiple products to cart
-- ✅ Validate products in cart
-- ✅ Complete checkout information (form validation)
-- ✅ Assert data integrity
-- ✅ Finalize order
-- ✅ Confirm success message
+End-to-end test automation project using Selenium, Pytest, and the Page Object Model (POM). This repository simulates a complete user purchase flow on the [Sauce Demo](https://www.saucedemo.com) e-commerce platform.
 
 ---
 
-## 🧱 Tech Stack
+## ✅ Completed Features
 
-| Tool | Description |
-|------|-------------|
-| **Python** | Programming language |
-| **Pytest** | Test framework |
-| **Selenium WebDriver** | Browser automation |
-| **POM (Page Object Model)** | Pattern for page abstraction |
-| **GitHub** | Version control & collaboration |
-| **ChromeDriver** | Browser driver |
-| **Config module** | Stores credentials and test data |
+- 🔧 **Framework Setup**  
+  Configured with Pytest, Selenium, Page Object Model, and custom flows for reusable logic.
+
+- 🔐 **Login Automation**  
+  Automated login using data from a centralized configuration.
+
+- 🛒 **Product Selection**  
+  Ability to add multiple predefined products by ID.
+
+- 🧾 **Cart Validation**  
+  Verifies that all selected products appear in the shopping cart.
+
+- 📦 **Checkout Process (Step 1 & 2)**  
+  - Enters user information from config.  
+  - Verifies the summary page contains at least one of the expected products (data-driven with a tuple).
+
+- ✅ **Order Completion**  
+  Finalizes the order and confirms a successful purchase.
+
+- 📂 **Clean Folder Structure**  
+  - `pages/`: Page Object Models for each page  
+  - `tests/`: Pytest tests  
+  - `utils/`: Configs and reusable flows
 
 ---
 
-## 📁 Project Structure
+## 📍 Technologies Used
 
-``` bash
-Test-Automation-Champion/
-│
-├── tests/ # Test cases (pytest-based)
-│ └── test_buy.py # Full end-to-end test
-│
-├── pages/ # Page Object Models
-│ ├── home_page.py
-│ ├── cart_page.py
-│ ├── checkout_page1.py
-│ ├── checkout_page2.py
-│ └── checkout_complete.py
-│
-├── utils/
-│ ├── config.py # Test data and credentials
-│ └── flows.py # Reusable flows like login
-│
-├── conftest.py # Pytest fixtures and WebDriver setup
-└── requirements.txt # Project dependencies
+- Python 3
+- Pytest
+- Selenium WebDriver
+- POM (Page Object Model) pattern
+- Git + GitHub for version control
+
+---
+
+## 🚧 Next Steps (In Progress)
+
+- 📊 **Integrate HTML Reports**  
+  Add reporting functionality to visualize test results and logs.
+
+- 🧪 **API Testing with `requests`**  
+  Validate product and user endpoints.
+
+- 🖼️ **Visual Testing with Playwright**  
+  Snapshot validation and UI consistency.
+
+- 🐳 **Docker Integration**  
+  Run tests in isolated containers for CI/CD.
+
+- ⚙️ **CI/CD via GitHub Actions**  
+  Auto-run tests on every push, PR or scheduled event.
+
+---
+
+## 📁 How to Run
+
+```bash
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run tests
+pytest tests/
 ```
 
 ---
 
-## 🔑 Credentials (via `utils/config.py`)
+## 🙌 Author
+
+Elias Schepis  
+Automation QA Engineer  
+🇪🇸 Based in Europe | 🌍 Open to international collaboration
+
+---
 
 ```python
-USERNAME = "standard_user"
-PASSWORD = "secret_sauce"
-USER_FIRSTNAME = "Elias"
-USER_LASTNAME = "Schepis"
-USER_ZIPCODE = "12345"
-PRODUCTS_TUPLE = (
-    "Sauce Labs Backpack",
-    "Sauce Labs Bike Light",
-    "Sauce Labs Bolt T-Shirt",
-    "Sauce Labs Fleece Jacket",
-    "Sauce Labs Onesie",
-    "Test.allTheThings() T-Shirt (Red)"
-)
+# test_buy.py
+def test_complete_workflow(driver):
+    # Full E2E test workflow implementation completed!
+    pass
 ```
 
-
-🧠 Key Features
-⏱️ Explicit waits (WebDriverWait + ExpectedConditions)
-
-🧼 Clean locator management
-
-🧪 Data-driven assertions
-
-🔄 Reusability through helper flows
-
-🛠️ Designed for scalability (can be integrated into CI/CD)
-
-📌 Next Steps (Planned)
- Add pytest-html reporting
-
- Integrate Docker & GitHub Actions
-
- Extend tests with edge cases (e.g., invalid login, empty fields)
-
- Add visual regression testing (Playwright or Percy)
-
+Stay tuned for API, visual testing and CI/CD integrations 🚀
