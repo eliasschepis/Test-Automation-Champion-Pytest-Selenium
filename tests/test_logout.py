@@ -5,7 +5,7 @@ import time
 # Importamos la clase LoginPage, que está escrita con el patrón Page Object Model (POM)
 # Esto nos permite reutilizar la lógica de interacción con la interfaz
 
-from utils.helpers import login_and_go_to_home
+from utils.flows import login_and_go_to_home
 from pages.login_page import LoginPage
 from pages.home_page import HomePage
 from pages.cart_page import CartPage

@@ -1,11 +1,9 @@
 # Importamos pytest, que es el framework que usamos para correr los tests
 import pytest
-import time
 
 # Importamos la clase LoginPage, que está escrita con el patrón Page Object Model (POM)
 # Esto nos permite reutilizar la lógica de interacción con la interfaz
 
-from utils.helpers import login_and_go_to_home
 from pages.login_page import LoginPage
 
 
@@ -57,7 +55,6 @@ testdata = [
 ]
 
 # Parametrizamos con dos variables: user y pwd
-
 
 @pytest.mark.parametrize("user, pwd", testdata)
 def testdata_login(driver, user, pwd):
