@@ -1,10 +1,8 @@
-from pages.login_page import LoginPage
-from pages.home_page import HomePage  # asumimos que ya lo tenés
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-from utils.config import Config
-
-def login_and_go_to_home(driver):
-    login_page = LoginPage(driver)
-    login_page.load()
-    login_page.login(Config.USERNAME, Config.PASSWORD)
-    return HomePage(driver)
+def wait_for_element(driver, locator, timeout=5):
+    """Espera explícita hasta que un elemento esté presente en el DOM"""
+    return WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located(locator)
+    )
