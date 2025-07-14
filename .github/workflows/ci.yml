@@ -1,0 +1,48 @@
+name: Run Selenium Pytest inside Docker
+
+# 🕒 Cuándo se ejecuta este workflow
+on:
+  push:        # Cuando haces push a cualquier rama
+  pull_request: # O cuando abres un pull request
+
+# 🧱 Conjunto de jobs a ejecutar
+jobs:
+  test:
+    runs-on: ubuntu-latest  # 🧑‍💻 GitHub usará un runner con Ubuntu
+
+    steps:
+      # 📥 1. Clonar el repositorio dentro del runner de GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 🐍 2. Instalar Python (solo necesario si usas Python fuera de Docker)
+      # Podemos omitirlo si todo está en Docker, lo dejo comentado por si lo necesitas luego
+      # - name: Set up Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.11'
+
+      # 🐳 3. Build de la imagen Docker definida en tu Dockerfile
+      - name: Build Docker image
+        run: docker build -t selenium-tests .
+
+      # ▶️ 4. Ejecutar un contenedor basado en la imagen, corriendo pytest dentro
+      - name: Run tests inside Docker
+        run: |
+          docker run --name selenium-runner selenium-tests
+
+      # 📤 5. Copiar los reportes HTML desde el contenedor al host del runner
+      - name: Copy reports to host
+        run: |
+          docker cp selenium-runner:/app/reports ./reports
+
+      # 🧹 6. Eliminar el contenedor una vez terminado (limpieza)
+      - name: Clean up
+        run: docker rm selenium-runner
+
+      # 📁 7. Subir los reportes como artefacto descargable del workflow
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: ./reports
