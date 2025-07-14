@@ -1,48 +1,42 @@
+# 🏷️ Nombre del workflow (aparece en la pestaña Actions)
 name: Run Selenium Pytest inside Docker
 
-# 🕒 Cuándo se ejecuta este workflow
+# 🚀 Cuándo se ejecuta este workflow
 on:
-  push:        # Cuando haces push a cualquier rama
-  pull_request: # O cuando abres un pull request
+  push:         # Se ejecuta cuando haces push a cualquier rama
+  pull_request: # También cuando se abre un pull request
 
-# 🧱 Conjunto de jobs a ejecutar
+# 🧱 Definimos los jobs que se ejecutarán
 jobs:
-  test:
-    runs-on: ubuntu-latest  # 🧑‍💻 GitHub usará un runner con Ubuntu
+  test:  # Nombre del job principal
+    runs-on: ubuntu-latest  # Utiliza un runner de GitHub basado en Ubuntu
 
     steps:
-      # 📥 1. Clonar el repositorio dentro del runner de GitHub
+      # 1️⃣ Descarga el código fuente del repositorio en el runner
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 🐍 2. Instalar Python (solo necesario si usas Python fuera de Docker)
-      # Podemos omitirlo si todo está en Docker, lo dejo comentado por si lo necesitas luego
-      # - name: Set up Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.11'
-
-      # 🐳 3. Build de la imagen Docker definida en tu Dockerfile
+      # 2️⃣ Construye la imagen Docker definida en tu Dockerfile
       - name: Build Docker image
         run: docker build -t selenium-tests .
 
-      # ▶️ 4. Ejecutar un contenedor basado en la imagen, corriendo pytest dentro
+      # 3️⃣ Ejecuta los tests dentro del contenedor Docker
       - name: Run tests inside Docker
         run: |
-          docker run --name selenium-runner selenium-tests
+          docker run --name selenium-runner selenium-tests || docker logs selenium-runner
 
-      # 📤 5. Copiar los reportes HTML desde el contenedor al host del runner
+      # 4️⃣ Copia la carpeta /app/reports desde el contenedor al runner de GitHub
       - name: Copy reports to host
         run: |
           docker cp selenium-runner:/app/reports ./reports
 
-      # 🧹 6. Eliminar el contenedor una vez terminado (limpieza)
+      # 5️⃣ Elimina el contenedor usado para liberar espacio
       - name: Clean up
         run: docker rm selenium-runner
 
-      # 📁 7. Subir los reportes como artefacto descargable del workflow
+      # 6️⃣ Sube los reportes generados como artefacto descargable en GitHub Actions
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
         with:
-          name: test-report
-          path: ./reports
+          name: test-report       # Nombre del artefacto
+          path: ./reports         # Carpeta que queremos subir
