@@ -13,7 +13,7 @@ jobs:
     steps:
       # 📥 1. Clonar el repositorio dentro del runner de GitHub
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 🐍 2. Instalar Python (solo necesario si usas Python fuera de Docker)
       # Podemos omitirlo si todo está en Docker, lo dejo comentado por si lo necesitas luego
@@ -42,7 +42,7 @@ jobs:
 
       # 📁 7. Subir los reportes como artefacto descargable del workflow
       - name: Upload HTML Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: ./reports
