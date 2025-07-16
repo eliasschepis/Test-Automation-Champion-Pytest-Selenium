@@ -22,6 +22,7 @@ This is a complete QA automation framework built with **Python**, **Selenium Web
 ├── pages/          # Page Object classes (POM)
 ├── reports/        # Auto-generated HTML reports
 ├── tests/          # Test cases using Pytest
+│   └── api_tests/  # REST API tests using requests
 ├── utils/          # Utility modules (waits, data, etc.)
 ├── .github/
 │   └── workflows/
@@ -146,6 +147,25 @@ git push origin main
 
 ---
 
+## 📡 API Testing Included
+
+In addition to UI tests, this framework also includes tests for public REST APIs using Python's `requests` library.  
+You can find these under `tests/api_tests/`.
+
+Run them with:
+
+```bash
+pytest tests/api_tests/
+```
+
+Or generate an HTML report:
+
+```bash
+pytest tests/api_tests/ --html=reports/api_test_report.html
+```
+
+---
+
 ## 📊 Viewing the Test Report
 
 After any test run (local or CI), open:
@@ -166,13 +186,13 @@ It contains a full summary of passed and failed tests, logs, and metadata.
 - Pytest-HTML
 - Docker
 - GitHub Actions
+- Requests (for API tests)
 
 ---
 
 ## 🧼 Optional Next Steps
 
 - Add a badge showing CI status in the README
-- Add API testing with `requests`
 - Add visual testing with `Playwright`
 - Add configuration per environment (dev/stage/prod)
 - Add test data generators or factories
