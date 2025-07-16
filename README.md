@@ -1,5 +1,8 @@
 # ✅ QA Automation Framework (Selenium + Pytest + HTML Reports + Docker + GitHub Actions)
 
+![CI](https://github.com/eliasschepis/Test-Automation-Champion-SauceE2E/actions/workflows/ci.yml/badge.svg)
+
+
 This is a complete QA automation framework built with **Python**, **Selenium WebDriver**, and **Pytest**, using the **Page Object Model (POM)** design pattern. It also includes **HTML reporting**, full **Docker integration**, and a ready-to-use **GitHub Actions CI/CD pipeline** for isolated, reproducible, and automated test execution.
 
 ---
