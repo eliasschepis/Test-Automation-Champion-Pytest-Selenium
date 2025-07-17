@@ -2,8 +2,7 @@
 
 ![CI](https://github.com/eliasschepis/Test-Automation-Champion-SauceE2E/actions/workflows/ci.yml/badge.svg)
 
-
-This is a complete QA automation framework built with **Python**, **Selenium WebDriver**, and **Pytest**, using the **Page Object Model (POM)** design pattern. It also includes **HTML reporting**, full **Docker integration**, and a ready-to-use **GitHub Actions CI/CD pipeline** for isolated, reproducible, and automated test execution.
+This is a complete QA automation framework built with **Python**, **Selenium WebDriver**, and **Pytest**, using the **Page Object Model (POM)** design pattern. It also includes **HTML reporting**, full **Docker integration**, a ready-to-use **GitHub Actions CI/CD pipeline**, **API testing**, and **visual regression testing with Playwright**.
 
 ---
 
@@ -15,6 +14,8 @@ This is a complete QA automation framework built with **Python**, **Selenium Web
 - 🔹 HTML reports with `pytest-html`
 - 🔹 Docker integration for running tests in containers
 - 🔹 GitHub Actions CI/CD for automated testing on push and PR
+- 🔹 REST API tests with `requests`
+- 🔹 Visual Testing with Playwright (UI comparisons)
 
 ---
 
@@ -22,17 +23,23 @@ This is a complete QA automation framework built with **Python**, **Selenium Web
 
 ```
 .
-├── pages/          # Page Object classes (POM)
-├── reports/        # Auto-generated HTML reports
-├── tests/          # Test cases using Pytest
-│   └── api_tests/  # REST API tests using requests
-├── utils/          # Utility modules (waits, data, etc.)
+├── pages/                   # Page Object classes (POM)
+├── reports/                 # Auto-generated HTML reports
+├── tests/                   # Test cases using Pytest
+│   └── api_tests/           # REST API tests using requests
+├── visual_tests/            # Playwright visual UI tests
+│   ├── baseline/            # Reference screenshots
+│   ├── current/             # Screenshots taken during tests
+│   ├── test_visual_homepage.py
+│   ├── test_visual_login.py
+│   └── test_visual_login_fail.py
+├── utils/                   # Utility modules (waits, data, etc.)
 ├── .github/
 │   └── workflows/
-│       └── ci.yml  # GitHub Actions workflow
-├── Dockerfile      # Docker configuration
+│       └── ci.yml           # GitHub Actions workflow
+├── Dockerfile               # Docker configuration
 ├── requirements.txt
-└── README.md       # Project overview and instructions
+└── README.md                # Project overview and instructions
 ```
 
 ---
@@ -45,13 +52,42 @@ This is a complete QA automation framework built with **Python**, **Selenium Web
 pip install -r requirements.txt
 ```
 
-### 2. Run tests with Pytest
+### 2. Run Selenium + Pytest tests
 
 ```bash
 pytest --html=reports/report.html --self-contained-html
 ```
 
 The report will be saved in the `reports/` folder.
+
+---
+
+## 🖼️ Visual Testing with Playwright
+
+This framework includes **visual regression testing** using **Playwright** to detect unintended UI changes by comparing screenshots to reference images.
+
+### 🔍 Visual Tests Included
+
+- Home Page UI
+- Successful Login UI
+- Failed Login (error message)
+
+### 🧪 Run visual tests
+
+```bash
+pytest visual_tests/
+```
+
+### 📁 Screenshot folders
+
+- `visual_tests/baseline/`: reference images (expected UI)
+- `visual_tests/current/`: screenshots generated during test runs
+
+> Update baseline images manually only when the UI change is intentional.
+
+### 🐳 Docker Support
+
+Ensure your `Dockerfile` contains the required dependencies for Playwright. See `README_visual.md` for full details.
 
 ---
 
@@ -69,22 +105,22 @@ docker build -t qa-automation-framework .
 docker run --rm -v ${PWD}/reports:/app/reports qa-automation-framework
 ```
 
-✅ This will:
-- Mount your local `reports/` folder to the container
-- Execute all tests inside Docker
-- Output the `report.html` to your local `reports/` folder
-
 📌 On Windows PowerShell, use:
 
 ```bash
 docker run --rm -v ${PWD}.Path\reports:/app/reports qa-automation-framework
 ```
 
+✅ This will:
+- Mount your local `reports/` folder to the container
+- Execute all tests inside Docker
+- Output the `report.html` to your local `reports/` folder
+
 ---
 
 ## ⚙️ Continuous Integration with GitHub Actions
 
-This project includes a complete CI workflow using **GitHub Actions** to automatically build the Docker container, run the Selenium + Pytest tests, and generate HTML reports on every `push` or `pull request`.
+This project includes a complete CI workflow using **GitHub Actions** to automatically build the Docker container, run tests, and generate HTML reports on every `push` or `pull request`.
 
 ### ✅ What the workflow does:
 
@@ -92,7 +128,7 @@ This project includes a complete CI workflow using **GitHub Actions** to automat
 2. Builds the Docker image from your Dockerfile.
 3. Runs all tests inside the container.
 4. Copies the HTML report from the container to the runner.
-5. Uploads the report as an artifact you can download.
+5. Uploads the report as an artifact.
 6. Cleans up the container.
 
 ### 📄 `.github/workflows/ci.yml`
@@ -133,35 +169,20 @@ jobs:
           path: ./reports
 ```
 
-### 📥 How to use it
-
-1. Create the folder `.github/workflows/` if it doesn't exist.
-2. Add the file `ci.yml` with the contents above.
-3. Commit and push to GitHub:
-
-```bash
-git add .github/workflows/ci.yml
-git commit -m "Add CI workflow with Docker and pytest"
-git push origin main
-```
-
-4. Go to the **Actions** tab on GitHub to monitor the workflow.
-5. Once complete, download the HTML report from the **Artifacts** section.
-
 ---
 
 ## 📡 API Testing Included
 
-In addition to UI tests, this framework also includes tests for public REST APIs using Python's `requests` library.  
-You can find these under `tests/api_tests/`.
+This framework also includes tests for public REST APIs using Python's `requests` library.  
+Located under `tests/api_tests/`.
 
-Run them with:
+### 🧪 Run API tests
 
 ```bash
 pytest tests/api_tests/
 ```
 
-Or generate an HTML report:
+Or with HTML report:
 
 ```bash
 pytest tests/api_tests/ --html=reports/api_test_report.html
@@ -189,21 +210,22 @@ It contains a full summary of passed and failed tests, logs, and metadata.
 - Pytest-HTML
 - Docker
 - GitHub Actions
+- Playwright (for visual testing)
 - Requests (for API tests)
 
 ---
 
 ## 🧼 Optional Next Steps
 
-- Add a badge showing CI status in the README
-- Add visual testing with `Playwright`
-- Add configuration per environment (dev/stage/prod)
-- Add test data generators or factories
-- Integrate with Slack/email for test results
+- Add a badge showing CI status in the README (✅ already done)
+- Add more API endpoints and visual flows
+- Add test data generators
+- Add environment switching (dev/stage/prod)
+- Integrate test result notifications (Slack, email, etc.)
 
 ---
 
 ## 📫 Contributions & Feedback
 
 Feel free to fork this repo or submit issues and improvements.  
-This project is intended for learning and as a production-ready foundation for your QA automation workflows.
+This project is intended for learning and as a production-ready foundation for robust QA automation.
